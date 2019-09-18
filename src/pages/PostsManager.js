@@ -13,6 +13,7 @@ import {
   ListItemSecondaryAction,
 } from '@material-ui/core';
 import { Delete as DeleteIcon, Add as AddIcon } from '@material-ui/icons';
+import { Container, Row, Col } from 'reactstrap';
 import moment from 'moment';
 import { find, orderBy } from 'lodash';
 import { compose } from 'recompose';
@@ -23,6 +24,9 @@ import ErrorSnackbar from '../components/ErrorSnackbar';
 const styles = theme => ({
   posts: {
     marginTop: 2 * theme.spacing.unit,
+    boxShadow: '0 5px 7px 2px rgba(255, 105, 135, .3)',
+    background: 'linear-gradient(45deg, #B3B7F6 30%, #222FF3 90%)',
+    padding: '0 30px',
   },
   fab: {
     position: 'absolute',
@@ -39,7 +43,7 @@ const API = process.env.REACT_APP_API || 'http://localhost:3001';
 
 class PostsManager extends Component {
   state = {
-    loading: true,
+    loading: false,
     posts: [],
     error: null,
   };
@@ -102,47 +106,80 @@ class PostsManager extends Component {
     const { classes } = this.props;
 
     return (
-      <Fragment>
-        <Typography variant="display1">Posts Manager</Typography>
-        {this.state.posts.length > 0 ? (
-          <Paper elevation={1} className={classes.posts}>
-            <List>
-              {orderBy(this.state.posts, ['updatedAt', 'title'], ['desc', 'asc']).map(post => (
-                <ListItem key={post.id} button component={Link} to={`/posts/${post.id}`}>
-                  <ListItemText
-                    primary={post.title}
-                    secondary={post.updatedAt && `Updated ${moment(post.updatedAt).fromNow()}`}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton onClick={() => this.deletePost(post)} color="inherit">
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-        ) : (
-          !this.state.loading && <Typography variant="subheading">No posts to display</Typography>
-        )}
-        <Button
-          variant="fab"
-          color="secondary"
-          aria-label="add"
-          className={classes.fab}
-          component={Link}
-          to="/posts/new"
-        >
-          <AddIcon />
-        </Button>
-        <Route exact path="/posts/:id" render={this.renderPostEditor} />
-        {this.state.error && (
-          <ErrorSnackbar
-            onClose={() => this.setState({ error: null })}
-            message={this.state.error.message}
-          />
-        )}
-      </Fragment>
+      <Container>
+        <Fragment>
+          <Typography variant="display1">Notes</Typography>
+          <Row>
+            <Col>
+              <Typography variant="display2">Mom</Typography>
+              {this.state.posts.length > 0 ? (
+                <Paper elevation={1} className={classes.posts}>
+                  <List>
+                    {orderBy(this.state.posts, ['updatedAt', 'title'], ['desc', 'asc']).map(post => (
+                      <ListItem key={post.id} button component={Link} to={`/posts/${post.id}`}>
+                        <ListItemText
+                          primary={post.title}
+                          secondary={post.updatedAt && `Updated ${moment(post.updatedAt).fromNow()}`}
+                        />
+                        <ListItemSecondaryAction>
+                          <IconButton onClick={() => this.deletePost(post)} color="inherit">
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Paper>
+              ) : (
+                  !this.state.loading && <Typography variant="subheading">No posts to display</Typography>
+                )}
+            </Col>
+            <Col>
+              <Typography variant="display2">Sister</Typography>
+              {this.state.posts.length > 0 ? (
+                <Paper elevation={1} className={classes.posts}>
+                  <List>
+                    {orderBy(this.state.posts, ['updatedAt', 'title'], ['desc', 'asc']).map(post => (
+                      <ListItem key={post.id} button component={Link} to={`/posts/${post.id}`}>
+                        <ListItemText
+                          primary={post.title}
+                          secondary={post.updatedAt && `Updated ${moment(post.updatedAt).fromNow()}`}
+                        />
+                        <ListItemSecondaryAction>
+                          <IconButton onClick={() => this.deletePost(post)} color="inherit">
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Paper>
+              ) : (
+                  !this.state.loading && <Typography variant="subheading">No posts to display</Typography>
+                )}
+            </Col>
+          </Row>
+          <Button
+            variant="fab"
+            color="secondary"
+            aria-label="add"
+            className={classes.fab}
+            component={Link}
+            to="/posts/new"
+          >
+
+            <AddIcon />
+          </Button>
+          <Route exact path="/posts/:id" render={this.renderPostEditor} />
+          {this.state.error && (
+            <ErrorSnackbar
+              onClose={() => this.setState({ error: null })}
+              message={this.state.error.message}
+            />
+
+          )}
+        </Fragment>
+      </Container>
     );
   }
 }
