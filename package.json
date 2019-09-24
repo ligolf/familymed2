@@ -47,12 +47,12 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ligolf/familymed.git"
+    "url": "git+https://github.com/ligolf/familymed2.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ligolf/familymed/issues"
+    "url": "https://github.com/ligolf/familymed2/issues"
   },
-  "homepage": "https://github.com/ligolf/familymed#readme"
+  "homepage": "https://github.com/ligolf/familymed2#readme"
 }
